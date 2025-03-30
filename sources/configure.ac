@@ -1,10 +1,9 @@
-#                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([jcal], [0.5.1], [https://github.com/persiancal/jcal])
+AC_INIT([jcal],[0.5.1],[https://github.com/persiancal/jcal])
 
 AM_INIT_AUTOMAKE
-AC_PROG_LIBTOOL
+LT_INIT
 AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
@@ -39,14 +38,14 @@ AC_CONFIG_FILES([Makefile
 PYTHON_COMPAT=( python2.7 python2.6 )
 
 AC_ARG_ENABLE([pyjalali],
-              AC_HELP_STRING([--enbale-pyjalali], [Install Python bindings (pyjalali)]),
+              AS_HELP_STRING([--enbale-pyjalali],[Install Python bindings (pyjalali)]),
               [case $enableval in
                       yes|no) installpyjalali=$enableval ;;
                       *) AC_MSG_ERROR([Bad value $enableval for --enable-pyjalali]) ;;
               esac], installpyjalali="no")
 
 AC_ARG_WITH([python],
-              AC_HELP_STRING([--with-python], [Python implementation to install python bindings for]),
+              AS_HELP_STRING([--with-python],[Python implementation to install python bindings for]),
               [foundimpl=0
                withpython=$withval
                for impl in ${PYTHON_COMPAT@<:@@@:>@}; do
