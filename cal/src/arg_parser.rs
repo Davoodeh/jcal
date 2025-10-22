@@ -68,6 +68,7 @@ pub struct Args {
     /// This is the basis for calculating the "start date" of the layout.
     pub now: Date,
     pub layout: Layout,
+    pub full_year_mode: bool,
 }
 
 impl Args {
@@ -97,6 +98,12 @@ impl Args {
     /// This removes the need for "spanning" mechanism to complicate [`CalendarLayout`].
     // Now is the given value to the configuration without accounting for the span or month count.
     fn start_month(&self) -> Date {
+        if self.full_year_mode {
+            let mut date = self.now.clone();
+            date.set_saturating_month(1);
+            return date;
+        }
+
         // normalize just in case, it doesn't matter but since nothing is tested, better do
         let mut now = self.now.clone();
         now.set_saturating_day(1);
@@ -321,6 +328,7 @@ impl Default for Args {
                 .unwrap_or(80) as usize,
             // Doesn't matter what it is as of now.
             layout: Default::default(),
+            full_year_mode: false,
         }
     }
 }
@@ -505,9 +513,9 @@ impl FromArgMatches for Args {
         }
 
         if matches.get_flag(Self::YEAR_LONG) {
-            self.layout.base_row.column.year_in_header = true;
+            self.layout.base_row.column.year_in_header = false;
             self.months = 12;
-            self.now.set_saturating_month(1);
+            self.full_year_mode = true;
         }
 
         self.sync_layout();
