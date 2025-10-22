@@ -1,0 +1,22 @@
+[package]
+name = "jcal-cal"
+version = "0.1.0"
+description = "`cal` crate of `jcal` package (calendar with Jalali/Persian/Iranian support)"
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+jcal = { path = "../", version = "0.1.1" }
+
+jelal.workspace = true
+jiff.workspace = true
+clap.workspace = true
+
+colored = "3.0.0"
+terminal_size = "0.4.3"
+ansi-width = "0.1.0"
